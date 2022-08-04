@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './Containers/Home';
 import LoginPage from './Containers/Login';
+import ChatList from './Containers/ChatList';
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import {
   Button,
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="logIn" element={<LoginPage />}/>
+          <Route path="chatList" element={<ChatList />}/>
         </Routes>
       </BrowserRouter>
     </>
