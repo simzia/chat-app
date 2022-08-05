@@ -4,16 +4,8 @@ import './App.css';
 import Home from './Containers/Home';
 import LoginPage from './Containers/Login';
 import ChatList from './Containers/ChatList';
+import ChatScreen from './Containers/ChatScreen';
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Typography,
-  Stack,
-  Box,
-  TextField,
-  Grid,
-} from '@mui/material';
 
 function App() {
   return (
@@ -23,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="logIn" element={<LoginPage />}/>
           <Route path="chatList" element={<ChatList />}/>
+          <Route path='chatList/:id' element={<ChatScreen/>}/>
         </Routes>
       </BrowserRouter>
     </>
