@@ -10,12 +10,13 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { UserLoginDetail } from '../interface';
+import shadows from '@mui/material/styles/shadows';
 
 function Home() {
   const [name, setName] = useState<string>('');
   const [email, setemail] = useState<string>('');
-  const [nameError, setNameError] = useState<boolean>();
-  const [emailError, setEmailError] = useState<boolean>();
+  const [nameError, setNameError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<boolean>();
   const [userArray, setUserArray] = useState<UserLoginDetail[]>([]);
@@ -26,12 +27,25 @@ function Home() {
   ) => {
     console.log('NAME CHANGE HANDLER', e.target.value);
     setName(e.target.value);
+    if(email !== '' && password !== '') {
+      setStatus(true)
+    }
   };
   const emailChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     console.log('EMAIL CHANGE HANDLER', e.target.value);
     setemail(e.target.value);
+    if(name !== '' && password !== '') {
+      setStatus(true)
+    }
+  };
+  const passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log('password change handler');
+    setPassword(e.target.value)
+    if(email !== '' && name !== '') {
+      setStatus(true)
+    }
   };
   const submitHandler = () => {
     const arry: UserLoginDetail[] = [...userArray]
@@ -51,27 +65,22 @@ function Home() {
     } else {
       setPasswordError(false)
     }
-    if(name !== '' && email !== '' && password !== '') {
-      setStatus(true)
-    }
     if(name !== '' && email !== '' && password !=='') {
+      setStatus(true)
       arry.push({
         name: name,
         email: email,
         password: password
       })
     }
-    
     setUserArray(arry)
   };
+
   useEffect(() => {
-    console.log('NAME ERROR', userArray);
-  }, []);
+    console.log('NAME ERROR', status, userArray);
+  }, [submitHandler]);
   
-  const passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log('password change handler');
-    setPassword(e.target.value)
-  };
+  
   
   return (
     <Container
@@ -89,8 +98,11 @@ function Home() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              border: '1px solid grey',
-              p: 2,
+              border: '1px solid rgb(14,23,171)',
+              p: 8,
+              borderRadius: '18px',
+              boxShadow: "-8px -38px 242px -48px rgba(77,74,204,0.32)"
+              // boxShadow: "-8px -38px 242px -48px rgba(204,139,229,0.32)"
             }}
           >
             <Stack>
@@ -100,6 +112,7 @@ function Home() {
               <Stack direction="column">
                 {nameError ? (
                   <TextField
+                    required
                     error
                     id="name"
                     label="Name"
@@ -121,6 +134,7 @@ function Home() {
                 )}
                 {emailError ? (
                   <TextField
+                    required
                     error
                     id="email"
                     label="Email"
@@ -143,6 +157,7 @@ function Home() {
                 )}
                 {passwordError ? (
                   <TextField
+                    required
                     error
                     id="password"
                     label="Password"
@@ -167,7 +182,16 @@ function Home() {
                 )}
               </Stack>
               <Stack direction="row" justifyContent="center">
-                <Link
+                {!status ? (
+                   <Button
+                   variant="outlined"
+                   style={{ marginTop: '30px' }}
+                   onClick={() => submitHandler()}
+                 >
+                   Submit
+                 </Button>
+                ) : (
+                  <Link
                   to={!status ? '/' : 'logIn' }
                   style={{ textDecoration: 'none' }}
                 >
@@ -179,6 +203,8 @@ function Home() {
                     Submit
                   </Button>
                 </Link>
+                )}
+               
               </Stack>
             </Stack>
           </Box>

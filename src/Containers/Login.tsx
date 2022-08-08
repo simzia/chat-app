@@ -28,6 +28,9 @@ function LoginPage() {
     if(name !== '') {
       setNameError(false)
     }
+    if(email !== '') {
+      setStatus(true)
+    }
   };
 
   const emailChangeHandler = (
@@ -36,6 +39,9 @@ function LoginPage() {
     setEmail(e.target.value);
     if(email !== '') {
       setEmailError(false)
+    }
+    if(name !== '') {
+      setStatus(true)
     }
   };
 
@@ -88,8 +94,11 @@ function LoginPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              border: '1px solid grey',
-              p: 2,
+              border: '1px solid rgb(14,23,171)',
+              p: 8,
+              borderRadius: '18px',
+              boxShadow: "-8px -38px 242px -48px rgba(77,74,204,0.32)"
+              // boxShadow: "-8px -38px 242px -48px rgba(204,139,229,0.32)"
             }}
           >
             <Stack>

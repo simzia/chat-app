@@ -19,3 +19,10 @@ export interface UserDetails {
   email: string
 }
 
+export interface messageType {
+  message: string,
+  timestamp: string,
+  photoURL: string,
+  displayName: string,
+  avatarDisp: boolean
+}

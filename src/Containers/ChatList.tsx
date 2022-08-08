@@ -1,6 +1,5 @@
 import { Link, useLinkClickHandler } from 'react-router-dom';
 import {
-  Button,
   Container,
   Typography,
   Stack,
@@ -8,9 +7,7 @@ import {
   TextField,
   Grid,
   Avatar,
-  styled,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { UserList } from '../interface';
 
 function ChatList() {
@@ -19,62 +16,103 @@ function ChatList() {
     { name: 'Jack', messege: 'Hi! I am Jack' },
     { name: 'Jack', messege: 'Hi! I am Jack' },
     { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
+    { name: 'Jack', messege: 'Hi! I am Jack' },
   ];
+
   const clickHandler = (id: number) => {
     console.log('CLICK HANDLER!', id);
   };
-  const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  });
+
   return (
     <Container>
-      <Stack direction="column">
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <Box
           sx={{
             marginBottom: '20px',
-            border: '2px solid #e5e5e5',
-            p: 2,
-            backgroundColor: '#f5f5f5',
-            width: '100%',
+            border: '5px solid #cdcdcd',
+            // p: 2,
+            // backgroundColor: '#232323',
+            height: '800px',
+            overflowY: 'auto',
+            width: '500px',
+            borderRadius: '7px',
+            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
           }}
         >
-          <Stack direction="row" justifyContent="center" alignItems="center">
-            <Typography variant="h5" textAlign="center">
-              Chat List
+          <Stack
+            style={{ marginBottom: '30px', borderBottom: '2px solid #cdcdcd' }}
+          >
+            <Typography
+              variant="h5"
+              textAlign="center"
+              style={{
+                padding: '20px',
+              }}
+            >
+              User List
             </Typography>
           </Stack>
-        </Box>
-        {userList.map((user, index) => (
-          <Link to={`${index}`} style={{textDecoration: "none"}}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              mb={3}
-              onClick={() => clickHandler(index)}
+
+          {userList.map((user, index) => (
+            <Link
+              to={`${index}`}
+              style={{ textDecoration: 'none', paddingRight: '10px' }}
             >
-              <Grid item xs={2}>
-                <Stack direction="row" justifyContent="center">
-                  <Avatar
-                    alt={user.name}
-                    src="/static/images/user.png"
-                    // sx={{ width: 56, height: 56 }}
-                  />
-                </Stack>
+              <Grid
+                container
+                spacing={2}
+                alignItems="center"
+                justifyContent="center"
+                mb={3}
+                onClick={() => clickHandler(index)}
+              >
+                <Grid item xs={2}>
+                  <Stack direction="row" justifyContent="center">
+                    <Avatar
+                      alt={user.name}
+                      src="./static/images/user.png"
+                      // style={{
+                      //   backgroundColor: '#333',
+                      //   color: '#fff',
+                      //   border: '1px solid #fff',
+                      // }}
+                      sx={{ width: 56, height: 56 }}
+                    ></Avatar>
+                  </Stack>
+                </Grid>
+                <Grid item xs={10}>
+                  <Stack>
+                    <Typography style={{ marginBottom: '5px' }}>
+                      {user.name}
+                    </Typography>
+                    <TextField
+                      // inputProps={{ color: "#fff"}}
+                      // style={{
+                      //   backgroundColor: '#333',
+                      //   color: '#fff',
+                      //   border: '1px solid #fff',
+                      //   borderRadius: "7px"
+                      // }}
+                      value={user.messege}
+                    />
+                  </Stack>
+                </Grid>
               </Grid>
-              <Grid item xs={10}>
-                <Stack>
-                  <Typography>{user.name}</Typography>
-                  <TextField value={user.messege} />
-                </Stack>
-              </Grid>
-            </Grid>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </Box>
       </Stack>
       {/* <Stack direction="row">
         <Avatar alt="Remy Sharp" src="/static/images/user.png" />
