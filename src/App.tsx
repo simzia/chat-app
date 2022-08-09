@@ -13,9 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="logIn" element={<LoginPage />}/>
-          <Route path="chatList" element={<ChatList />}/>
-          <Route path='chatList/:id' element={<ChatScreen/>}/>
+          <Route path="logIn" element={<LoginPage />} />
+          <Route path="chatList" element={<ChatList />} />
+          <Route path='chatList/:id' element={<ChatScreen/>} />
         </Routes>
       </BrowserRouter>
     </>

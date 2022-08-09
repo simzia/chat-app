@@ -80,8 +80,6 @@ function Home() {
     console.log('NAME ERROR', status, userArray);
   }, [submitHandler]);
   
-  
-  
   return (
     <Container
       style={{

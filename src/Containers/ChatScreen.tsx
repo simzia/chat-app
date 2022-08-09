@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { MessageLeft, MessageRight } from '../Components/Message';
 import SendIcon from '@material-ui/icons/Send';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { messageType } from '../interface';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,9 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     wrapText: {
       width: '100%',
     },
-    button: {
-      //margin: theme.spacing(1),
-    },
+    
   })
 );
 
@@ -37,11 +36,11 @@ function ChatScreen() {
   const { id } = useParams();
   const [message, setMessage] = useState<string>("");
   const [messageArry, setMessageArry] = useState<string[]>(["Hey, hii I have received your message", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan gravida orci vitae sagittis. Integer."]);
+  const [receivedMessage, setReceivedMessage] = useState<messageType[]>([{message: "Hi, Jack! Here I am sending you a message.", timestamp: "MM/DD 12:01", photoURL: "https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c", displayName: "Jack", avatarDisp: true  }, {message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan gravida orci vitae sagittis.", timestamp: "MM/DD 13:01", photoURL: "", displayName: "John", avatarDisp: false}]);
 
   const onMessageChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // console.log('MESSAGE', e.target.value);
     setMessage(e.target.value);
   };
 
@@ -83,20 +82,15 @@ function ChatScreen() {
             height: 'calc( 100% - 80px )',
           }}
         >
-          <MessageLeft
-            message="Hi, Jack! Here I am sending you a message."
-            timestamp="MM/DD 10:00"
-            photoURL="https://lh3.googleusercontent.com/a-/AOh14Gi4vkKYlfrbJ0QLJTg_DLjcYyyK7fYoWRpz2r4s=s96-c"
-            displayName="Jack"
-            avatarDisp={true}
+          {receivedMessage?.map((item) => (
+            <MessageLeft
+            message={item.message}
+            timestamp={item.timestamp}
+            photoURL={item.photoURL}
+            displayName={item.displayName}
+            avatarDisp={item.avatarDisp}
           />
-          <MessageLeft
-            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan gravida orci vitae sagittis."
-            timestamp="MM/DD 12:01"
-            photoURL=""
-            displayName="Jack"
-            avatarDisp={false}
-          />
+          ))}
           {messageArry?.map((message) => (
             <MessageRight
             message={message}
@@ -106,7 +100,6 @@ function ChatScreen() {
             avatarDisp={true}
           />
           ))}
-          
         </Paper>
         <Container
           style={{
@@ -125,11 +118,11 @@ function ChatScreen() {
             style={{ flex: 'flex1', marginRight: '7px' }}
             value={message}
             onChange={(e) => onMessageChangeHandler(e)}
+            type="text"
           />
           <Button
             variant="contained"
             color="primary"
-            className={classes.button}
             onClick={() => onSendHandler()}
           >
             <SendIcon />

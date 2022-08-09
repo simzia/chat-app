@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { User, UserDetails } from '../interface';
-import { TurnLeft } from '@mui/icons-material';
 
 function LoginPage() {
   const [name, setName] = useState<string>('');
@@ -98,7 +97,6 @@ function LoginPage() {
               p: 8,
               borderRadius: '18px',
               boxShadow: "-8px -38px 242px -48px rgba(77,74,204,0.32)"
-              // boxShadow: "-8px -38px 242px -48px rgba(204,139,229,0.32)"
             }}
           >
             <Stack>

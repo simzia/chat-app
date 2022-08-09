@@ -7,16 +7,31 @@ import {
   TextField,
   Grid,
   Avatar,
+  FormControl,
+  InputAdornment,
 } from '@mui/material';
 import { UserList } from '../interface';
+import { MessageRight } from '../Components/Message';
+import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { useState } from 'react';
+
+// const useStyles = makeStyles(() => {
+//   return createStyles({
+//     search: {
+//       margin: '0',
+//     },
+//   });
+// });
 
 function ChatList() {
+  // const { search } = useStyles();
+  const [showClearIcon, setShowClearIcon] = useState('none');
+  const [searchName, setSearchName] = useState<string>();
+
   const userList: UserList[] = [
     { name: 'John', messege: 'I am John' },
-    { name: 'Jack', messege: 'Hi! I am Jack' },
-    { name: 'Jack', messege: 'Hi! I am Jack' },
-    { name: 'Jack', messege: 'Hi! I am Jack' },
-    { name: 'Jack', messege: 'Hi! I am Jack' },
     { name: 'Jack', messege: 'Hi! I am Jack' },
     { name: 'Jack', messege: 'Hi! I am Jack' },
     { name: 'Jack', messege: 'Hi! I am Jack' },
@@ -30,6 +45,18 @@ function ChatList() {
     console.log('CLICK HANDLER!', id);
   };
 
+  const handleSearch = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setSearchName(e.target.value)
+    setShowClearIcon(e.target.value === "" ? "none" : "flex")
+    console.log('HANDLE SEARCH', e.target.value);
+  };
+
+  const handleInputClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setSearchName("")
+    console.log('HANDLE INPUT CLICK');
+  };
   return (
     <Container>
       <Stack
@@ -64,22 +91,55 @@ function ChatList() {
               User List
             </Typography>
           </Stack>
-
+          <Stack direction="row" justifyContent="center" mb={2}>
+            <FormControl>
+              <TextField
+                size="small"
+                variant="outlined"
+                onChange={(e) => handleSearch(e)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ display: showClearIcon }}
+                      onClick={(e) => handleInputClick(e)}
+                    >
+                      <ClearIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                value={searchName}
+              />
+            </FormControl>
+          </Stack>
           {userList.map((user, index) => (
             <Link
               to={`${index}`}
-              style={{ textDecoration: 'none', paddingRight: '10px' }}
+              style={{
+                textDecoration: 'none',
+                paddingRight: '10px',
+                color: '#333',
+              }}
             >
               <Grid
                 container
                 spacing={2}
                 alignItems="center"
                 justifyContent="center"
-                mb={3}
                 onClick={() => clickHandler(index)}
+                p={1}
               >
-                <Grid item xs={2}>
-                  <Stack direction="row" justifyContent="center">
+                <Grid xs={2}>
+                  <Stack
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
                     <Avatar
                       alt={user.name}
                       src="./static/images/user.png"
@@ -88,25 +148,16 @@ function ChatList() {
                       //   color: '#fff',
                       //   border: '1px solid #fff',
                       // }}
-                      sx={{ width: 56, height: 56 }}
+                      sx={{ width: 45, height: 45 }}
                     ></Avatar>
                   </Stack>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid xs={10}>
                   <Stack>
                     <Typography style={{ marginBottom: '5px' }}>
                       {user.name}
                     </Typography>
-                    <TextField
-                      // inputProps={{ color: "#fff"}}
-                      // style={{
-                      //   backgroundColor: '#333',
-                      //   color: '#fff',
-                      //   border: '1px solid #fff',
-                      //   borderRadius: "7px"
-                      // }}
-                      value={user.messege}
-                    />
+                    <TextField value={user.messege} />
                   </Stack>
                 </Grid>
               </Grid>
@@ -114,13 +165,6 @@ function ChatList() {
           ))}
         </Box>
       </Stack>
-      {/* <Stack direction="row">
-        <Avatar alt="Remy Sharp" src="/static/images/user.png" />
-        <Stack>
-            <Typography>Name</Typography>
-            <TextField />
-          </Stack>
-      </Stack> */}
     </Container>
   );
 }
